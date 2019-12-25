@@ -5,20 +5,37 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/index.js',  // 入口文件
+  // 入口文件
+  entry: [
+    'babel-polyfill',
+    './src/index.js'
+  ],
   // 出口文件
   output: {
-    filename: 'bundle.js[chunkhash:8]',
+    filename: 'bundle.[hash].js',
     path: path.resolve(__dirname, 'dist')
   },
   // 开发服务器配置
   devServer: {
+    host: 'localhost',
     port: 3000, // 端口号
+    progress: true, // 开启加载
     open: true, // 自动打开浏览器
-    contentBase: './dist',
+    compress: true, // 启动压缩
+    contentBase: path.resolve(__dirname, 'dist'),
     hot: true, // 开启热更新
     overlay: true, // 浏览器页面上显示错误
-    hotstoryApiFallback: true
+    historyApiFallback: true, // 开启history模式
+    // api代理
+    proxy: {
+      '/api': {
+        target: 'https://test-user-api.wanshifu.com/',
+        changeOrigin: true,
+        withCredentials: true,
+        secure: false,
+        pathRewrite: { '^/api': '' }
+      }
+    }
   },
   // 处理对应模块
   module: {
@@ -54,6 +71,17 @@ module.exports = {
       {
         test: /\.(htm|html)$/,
         use: 'html-withimg-loader'
+      },
+      {
+        test: /\.(woff|woff2|eot|ttf|otf)$/,
+        exclude: path.resolve(__dirname, '../node_modules'),
+        use: [{
+          loader: 'file-loader',
+          options: {
+            limit: 10000,
+            name: 'fonts/[name].[ext]'
+          }
+        }]
       }
     ]
   },
@@ -73,12 +101,13 @@ module.exports = {
   },
   // 对应的插件
   plugins: [
+    // 热更新
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: './src/index.html', // 用哪个html作为模板
-      chunks: ['vendor', 'index', 'utils'], // 引入需要的chunk
+      template: './index.html', // 用哪个html作为模板
+      // chunks: ['vendor', 'index', 'utils'], // 引入需要的chunk
       hash: true // 会在打包和的bundle.js后面加上hash串
-    }),
-    "transform-runtime"
+    })
   ],
   resolve: {
     // 别名
