@@ -3,6 +3,10 @@ const webpack = require('webpack');
 
 // 这在文件名中包含每次会随着编译而发生变化哈希的 webpack bundle 尤其有用
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const px2rem = require('postcss-px2rem');
+const theme = require('./package.json').theme;
+
+console.log('theme--->', theme);
 
 module.exports = {
   // 入口文件
@@ -26,10 +30,9 @@ module.exports = {
     hot: true, // 开启热更新
     overlay: true, // 浏览器页面上显示错误
     historyApiFallback: true, // 开启history模式
-    // api代理
     proxy: {
       '/api': {
-        target: 'https://test-user-api.wanshifu.com/',
+        target: 'http://api.mtnhao.com/',
         changeOrigin: true,
         withCredentials: true,
         secure: false,
@@ -47,12 +50,59 @@ module.exports = {
         exclude: /node_modules/ // 排除node_modules，优化打包速度
       },
       {
-        test: /\.css$/, // 解析css
-        use: ['css-loader', 'postcss-loader'] // 从右向左解析
+        test: /\.(less)$/,     // 解析less
+        use: [{
+          loader: require.resolve('style-loader')
+        }, {
+          loader: require.resolve('css-loader')
+        }, {
+          loader: require.resolve('postcss-loader'),
+          options: {
+            ident: 'postcss',
+            modifyVars: theme,
+            plugins: () => [
+              require('postcss-flexbugs-fixes'),
+              require('postcss-preset-env')({
+                autoprefixer: {
+                  flexbox: 'no-2009',
+                },
+                stage: 3,
+              }),
+              px2rem({remUnit: 37.5})  // 这里表示 37.5px = 1rem
+            ],
+          }
+        }, {
+          loader: require.resolve('less-loader'),
+          options: {
+            javascriptEnabled: true,
+            sourceMap: true,
+            modifyVars: theme
+          }
+        }]
       },
       {
-        test: /\.less$/, // 解析less
-        use: ['css-loader', 'postcss-loader', 'less-loader']
+        test: /\.(css)$/,     // 解析css
+        use: [{
+          loader: require.resolve('style-loader')
+        }, {
+          loader: require.resolve('css-loader'),
+        }, {
+          loader: require.resolve('postcss-loader'),
+          options: {
+            ident: 'postcss',
+            modifyVars: theme,
+            plugins: () => [
+              require('postcss-flexbugs-fixes'),
+              require('postcss-preset-env')({
+                autoprefixer: {
+                  flexbox: 'no-2009',
+                },
+                stage: 3,
+              }),
+              px2rem({remUnit: 37.5})  // 这里表示 37.5px = 1rem
+            ],
+          }
+        }]
       },
       // 处理css引入的背景图片
       {
@@ -62,6 +112,7 @@ module.exports = {
             loader: 'url-loader',
             options: {
               limit: 8192, // 小于8k的图片自动转为base64格式，并且不会存在实体图片
+              name: 'images/[name].[ext]?[hash:6]',
               outputPath: 'images/' // 图片打包后存放的路径
             }
           }
@@ -69,8 +120,8 @@ module.exports = {
       },
       // 处理页面引入的图片
       {
-        test: /\.(htm|html)$/,
-        use: 'html-withimg-loader'
+        test: /\.(htm|html)$/i,
+        use: [{loader: 'html-withimg-loader'}]
       },
       {
         test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -105,16 +156,15 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: './index.html', // 用哪个html作为模板
-      // chunks: ['vendor', 'index', 'utils'], // 引入需要的chunk
       hash: true // 会在打包和的bundle.js后面加上hash串
     })
   ],
   resolve: {
     // 别名
     alias: {
-      Pages: path.join(__dirname, 'src/pages'),
-      Component: path.join(__dirname, './src/components'),
-      images: path.join(__dirname, 'src/assets/images')
+      PAGE: path.join(__dirname, 'src/pages'),
+      COMPONENT: path.join(__dirname, './src/components'),
+      IMAGE: path.join(__dirname, 'src/assets/images')
     },
     // 省略后缀
     extensions: ['.js', '.jsx', '.json']

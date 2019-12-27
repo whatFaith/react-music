@@ -1,14 +1,17 @@
 {
   "presets": [
-      [
-          "env",
-          {
-              "loose": true,  
-              "modules": false 
-          }
-      ],
-      "es2015",
-      "react",
+    [
+      "env",
+      {
+        "loose": true,
+        "modules": false
+      }
+    ],
+    "es2015",
+    "react",
     "babel-preset-stage-3"
+  ],
+  "plugins": [
+    ["import", {"libraryName": "antd-mobile", "style": true}]
   ]
 }
