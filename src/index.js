@@ -9,8 +9,8 @@ import axios from 'axios';
 import store from './redux/store';
 import GetRouter from './router';
 
-// import { message } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.less';
+import './assets/style/_reset.less';
 
 axios.interceptors.response.use(response => {
   if (response.data && response.data.status === -1) {

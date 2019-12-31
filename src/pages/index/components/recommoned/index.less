@@ -1,0 +1,83 @@
+.index-recommoned {
+  
+  .title {
+    height: 55px;
+    line-height: 55px;
+    padding-left: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    position: relative;
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-top: 1px solid #300303;
+      border-right: 1px solid #300303;
+      top: 50%;
+      margin-left: 5px;
+      transform: translateY(-50%) rotate(45deg);
+    }
+  }
+
+  .music-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    .music {
+      width: 120px;
+      margin-top: 7px;
+      margin-left: 3.75px;
+
+      .img {
+        width: 120px;
+        height: 120px;
+        position: relative;
+
+        .person {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 20px;
+          width: 100%;
+          background-color: rgba(0, 0, 0, .15);
+          color: #ffffff;
+          font-size: 12px;
+          padding-right: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+
+          i {
+            margin-right: 5px;
+            display: block;
+            width: 12px;
+            height: 12px;
+            background-image: url('./images/listen.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+          }
+        }
+        img {
+          width: 120px;
+          border-radius: 5px;
+        }
+      }
+    }
+    p {
+      margin: 7px 3.5px;
+      height: 35px;
+      line-height: 17px;
+      font-size: 12px;
+      color: #333333;
+      overflow: hidden;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      word-break: break-all;
+      word-wrap: break-word;
+      text-overflow: ellipsis;
+    }
+  }
+}

@@ -1,0 +1,41 @@
+.c-user-info {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, .4);
+  z-index: 99999;
+
+  &--box {
+    width: 80%;
+    height: 100%;
+    animation: changeWidth 0.1s ease-out;
+    background: #ffffff;
+    overflow: hidden;
+
+    @keyframes changeWidth {
+      0% {
+        width: 0;
+      }
+      100% {
+        width: 70%;
+      }
+    }
+  }
+
+  &--container {
+    width: 8rem;
+    height: 100%;
+  }
+  &--img {
+    width: 100%;
+    height: 167px;
+    background-color: #e5473c;
+    background-image: url('./images/power.png');
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center center;
+    opacity: .8;
+  }
+}

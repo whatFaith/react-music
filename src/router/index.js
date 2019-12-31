@@ -1,18 +1,36 @@
-import React from 'react';
+import React, { Component, lazy, Suspense } from 'react'
 
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 
-import Index from '../pages/index';
+import Header from '@COMPONENT/header';
+import Loading from '@COMPONENT/loading';
 
-const getRouter = () => (
-  <Router>
-    <div>
-      <Switch>
-        <Route path="/" component={Index} />
-        <Redirect to="/" />
-      </Switch>
-    </div>
-  </Router>
-)
+const Index = lazy(() => import('@PAGE/index'));
+const Sheetlist = lazy(() => import('@PAGE/sheetlist'));
 
-export default getRouter;
+import './index.less';
+
+class GetRouter extends Component {
+
+  render() {
+    return (
+      <Router>
+        <div className="p-all">
+          <Header />
+          <main className="p-all--wrapper">
+            <Suspense fallback={<Loading />}>
+              <Switch>
+                <Route path="/" exact component={Index} />
+                <Route path='/sheetlist' exact component={Sheetlist} />
+                <Redirect to="/" />
+              </Switch>
+            </Suspense>
+          </main>
+        </div>
+      </Router>
+    );
+  }
+}
+
+
+export default GetRouter;

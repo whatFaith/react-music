@@ -1,36 +1,33 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 
-import { Carousel, WingBlank } from 'antd-mobile';
+import { Carousel } from 'antd-mobile';
 
 import './index.less';
 
-class Container extends PureComponent {
+class Banenr extends PureComponent {
 
   render() {
     const {
       banner = {}
     } = this.props;
 
-    console.log('banner->', banner);
-
+    if (!(Array.isArray(banner.data) && banner.data.length > 0)) return null;
     return (
-      <div className="c-container">
-        <WingBlank>
+      <div className="index-banner">
+        <div className="index-banner--container">
           <Carousel
-            beforeChange={(from, to) => console.log(`slide from ${from} to ${to}`)}
-            afterChange={index => console.log('slide to', index)}
             autoplay={true}
-            infinite
+            infinite={true}
           >
             {
-              Array.isArray(banner.data) && banner.data.map((val, idx) => {
+              banner.data.map((val, idx) => {
                 return (
                   <a
                     key={val.targetId}
-                    className="c-container--link"
+                    className="index-banner--link"
                   >
-                    <img 
+                    <img
                       src={val.imageUrl}
                       onLoad={() => {
                         window.dispatchEvent(new Event('resize'));
@@ -41,7 +38,7 @@ class Container extends PureComponent {
               })
             }
           </Carousel>
-        </WingBlank>
+        </div>
       </div>
     );
   }
@@ -56,4 +53,4 @@ export default connect(
       banner
     }
   }
-)(Container);
+)(Banenr);

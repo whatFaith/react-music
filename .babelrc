@@ -1,17 +1,37 @@
+// {
+//   "presets": [
+//     [
+//       "env",
+//       {
+//         "loose": true,
+//         "modules": false
+//       }
+//     ],
+//     "es2015",
+//     "react",
+//     "babel-preset-stage-3"
+//   ],
+//   "plugins": [
+//     ["import", {"libraryName": "antd-mobile", "style": true}]
+//   ]
+// }
 {
   "presets": [
+    "@babel/preset-react",
+    // "state-x",
     [
-      "env",
+      "@babel/preset-env",
       {
-        "loose": true,
-        "modules": false
+        "modules": false,
+        "debug": true,
+        "uglify": true,
+        "useBuiltIns": true
       }
-    ],
-    "es2015",
-    "react",
-    "babel-preset-stage-3"
+    ]
   ],
   "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "lodash",
     ["import", {"libraryName": "antd-mobile", "style": true}]
   ]
 }

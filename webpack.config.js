@@ -45,7 +45,15 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: 'babel-loader',
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: [
+              '@babel/transform-runtime',
+            ]
+          }
+        },
         include: /src/, // 只转换src目录下的js
         exclude: /node_modules/ // 排除node_modules，优化打包速度
       },
@@ -59,7 +67,6 @@ module.exports = {
           loader: require.resolve('postcss-loader'),
           options: {
             ident: 'postcss',
-            modifyVars: theme,
             plugins: () => [
               require('postcss-flexbugs-fixes'),
               require('postcss-preset-env')({
@@ -75,7 +82,6 @@ module.exports = {
           loader: require.resolve('less-loader'),
           options: {
             javascriptEnabled: true,
-            sourceMap: true,
             modifyVars: theme
           }
         }]
@@ -86,33 +92,17 @@ module.exports = {
           loader: require.resolve('style-loader')
         }, {
           loader: require.resolve('css-loader'),
-        }, {
-          loader: require.resolve('postcss-loader'),
-          options: {
-            ident: 'postcss',
-            modifyVars: theme,
-            plugins: () => [
-              require('postcss-flexbugs-fixes'),
-              require('postcss-preset-env')({
-                autoprefixer: {
-                  flexbox: 'no-2009',
-                },
-                stage: 3,
-              }),
-              px2rem({remUnit: 37.5})  // 这里表示 37.5px = 1rem
-            ],
-          }
         }]
       },
       // 处理css引入的背景图片
       {
-        test: /\.(jpe?g|png|gif)$/,
+        test: /\.(jpe?g|png|gif|svg)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: require.resolve('url-loader'),
             options: {
               limit: 8192, // 小于8k的图片自动转为base64格式，并且不会存在实体图片
-              name: 'images/[name].[ext]?[hash:6]',
+              name: 'static/media/[name].[hash:8].[ext]',
               outputPath: 'images/' // 图片打包后存放的路径
             }
           }
@@ -162,12 +152,13 @@ module.exports = {
   resolve: {
     // 别名
     alias: {
-      PAGE: path.join(__dirname, 'src/pages'),
-      COMPONENT: path.join(__dirname, './src/components'),
-      IMAGE: path.join(__dirname, 'src/assets/images')
+      '@PAGE': path.join(__dirname, 'src/pages'),
+      '@COMPONENT': path.join(__dirname, 'src/components'),
+      '@ASSETS': path.join(__dirname, 'src/assets'),
+      '@ACTION': path.join(__dirname, 'src/redux/actions')
     },
     // 省略后缀
-    extensions: ['.js', '.jsx', '.json']
+    extensions: ['.js', '.jsx', '.json', '.less']
   },
   mode: 'development' // 模式配置
 }
