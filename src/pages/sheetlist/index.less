@@ -1,0 +1,71 @@
+.p-sheetlist {
+  display: flex;
+  flex-direction: column;
+
+  .am-pull-to-refresh-content > div {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &:last-child {
+      justify-content: center;
+    }
+  }
+
+  .music {
+    width: 120px;
+    margin-top: 7px;
+    margin: 10px 0 0 3.75px;
+
+    .img {
+      width: 120px;
+      height: 120px;
+      border-radius: 5px;
+      overflow: hidden;
+      position: relative;
+
+      .person {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 20px;
+        width: 100%;
+        background-color: rgba(0, 0, 0, .15);
+        color: #ffffff;
+        font-size: 12px;
+        padding-right: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+
+        i {
+          margin-right: 5px;
+          display: block;
+          width: 12px;
+          height: 12px;
+          background-image: url('./images/listen.png');
+          background-size: contain;
+          background-repeat: no-repeat;
+        }
+      }
+      img {
+        width: 120px;
+      }
+    }
+    p {
+      margin: 7px 3.5px;
+      height: 35px;
+      line-height: 17px;
+      font-size: 12px;
+      color: #333333;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-clamp: 2;
+      -webkit-line-clamp: 2;
+      word-break: break-all;
+      word-wrap: break-word;
+      text-overflow: ellipsis;
+    }
+  }
+}

@@ -14,7 +14,7 @@ export default function playlist(state = initState, action) {
     case PLAYLIST_CONFIG_SUCCESS:
       return {
         ...state,
-        data: data.playlists
+        data: (state.data || []).concat(data.playlists)
       };
     default:
       return state;

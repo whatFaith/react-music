@@ -10,7 +10,7 @@ import Loading from '@COMPONENT/loading';
 
 import './index.less';
 
-class Sheetlist extends PureComponent {
+class Rank extends PureComponent {
   constructor(props) {
     super(props);
 
@@ -40,33 +40,8 @@ class Sheetlist extends PureComponent {
     const { playlist } = this.props;
 
     return (
-      <div className="p-sheetlist" ref={_ => this.ptr = _}>
-        <PullToRefresh
-          damping={60}
-          style={{
-            height: this.state.height,
-            overflow: 'auto'
-          }}
-          direction={'up'}
-          refreshing={this.state.refreshing}
-          onRefresh={this.fetchPlaylist}
-        >
-          {
-            playlist.data.map((list) => {
-              return (
-                <div className="music" key={list.id}>
-                  <div className="img">
-                    <div className="person">
-                      <i />{translateNum(list.playCount)}
-                    </div>
-                    <img src={list.coverImgUrl} />
-                  </div>
-                  <p>{list.name}</p>
-                </div>
-              );
-            })
-          }
-        </PullToRefresh>
+      <div className="p-rank">
+        
       </div>
     );
   }

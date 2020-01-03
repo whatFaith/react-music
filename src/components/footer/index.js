@@ -1,18 +1,14 @@
 import React, { PureComponent } from 'react';
-import { withRouter } from 'react-router-dom'
 import { Link } from 'react-router-dom';
 
 import './index.less';
 
 import UserInfo from '../user-info';
 
-class Header extends PureComponent {
-  constructor(props) {
-    super(props);
+export default class Footer extends PureComponent {
 
-    this.state = {
-      userInfoShow: false
-    }
+  state = {
+    userInfoShow: false
   }
 
   changeUserInfo = () => {
@@ -23,11 +19,10 @@ class Header extends PureComponent {
 
   render() {
     const { userInfoShow } = this.state;
-    const pathname = this.props.location.pathname;
-    // const showHeader = /\//.test(this.props.location.pathname);
 
-    if (pathname !== '/') return null;
-
+    const showFooter = false;
+  
+    if (!showFooter) return null;
     return (
       <div className="c-header">
         <div className="c-header--container">
@@ -48,5 +43,3 @@ class Header extends PureComponent {
     );
   }
 }
-
-export default withRouter(Header);

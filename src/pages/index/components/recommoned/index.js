@@ -18,7 +18,7 @@ class Recommoned extends PureComponent {
           {
             personal.data.map((list, index) => {
               return (
-                <div className="music">
+                <div className="music" key={list.id}>
                   <div className="img">
                     <div className="person">
                       <i />{ translateNum(list.playCount) }

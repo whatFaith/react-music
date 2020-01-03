@@ -8,7 +8,7 @@ export function playlist(offset, order = 'hot') {
     'API': {
       url: 'top/playlist',
       types: [PLAYLIST_CONFIG, PLAYLIST_CONFIG_SUCCESS, PLAYLIST_CONFIG_FAIL],
-      methods: 'get',
+      method: 'get',
       data: {
         offset,
         order,

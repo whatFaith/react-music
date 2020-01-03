@@ -13,12 +13,11 @@ export default store => next => action => {
   }
   const { url } = opts;
   const [requestType, successType, failureType] = opts.types;
-  opts.url = '/api' + url;
+  opts.url = '/api/' + url;
 
   function actionWith(_action) {
     _action = Object.assign(action, _action);
 
-    // 'fetching' 'success' 'fail'
     const obj = {
       [STATUS]: 'fetching'
     };
@@ -41,11 +40,13 @@ export default store => next => action => {
   // 处理post请求下会把参数转为字符串的问题
   opts.transformRequest = [function (data) {
     return Qs.stringify(data)
-  }],
+  }];
 
-  console.log('opts--->', opts);
+  // get 请求传参
+  opts.params = opts.data;
 
   return axios(opts).then(data => {
+    console.log('opts--->', opts);
     if (data && data.data) {
       data.data.extra = opts.extra;
     }
