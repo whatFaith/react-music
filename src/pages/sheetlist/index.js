@@ -25,6 +25,7 @@ class Sheetlist extends PureComponent {
   }
 
   fetchPlaylist = () => {
+    if (this.state.isLoading) return;
     this.setState({ refreshing: true, isLoading: true });
     const { fetchPlaylist, playlist } = this.props;
 

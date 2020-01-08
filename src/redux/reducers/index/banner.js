@@ -1,20 +1,20 @@
-import { PERSONAL_CONFIG_SUCCESS } from '../actions';
+import { BANNER_CONFIG_SUCCESS } from '@ACTION';
 
 const initState = {
   data: []
 };
 
-export default function personal(state = initState, action) {
+export function banner(state = initState, action) {
   const {
     type,
     data
   } = action;
 
   switch (type) {
-    case PERSONAL_CONFIG_SUCCESS:
+    case BANNER_CONFIG_SUCCESS:
       return {
         ...state,
-        data: data.result
+        data: data.banners
       };
     default:
       return state;

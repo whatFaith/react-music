@@ -7,10 +7,14 @@ import './index.less'
 // 页面导航栏组件
 
 const MmNav = props => {
-  const { title = '歌单', history } = props;
-  const showNav = /sheetlist/.test(props.location.pathname);
+  const pathname = props.location.pathname;
+  const showNav = /sheetlist|rank/.test(pathname);
 
   if (!showNav) return null;
+
+  const { history } = props;
+  const title = /sheetlist/.test(pathname) ? '歌单' :
+                /rank/.test(pathname) ? '排行榜' : '';
   return (
     <nav className="mm-nav">
       <div className="mm-nav-left" onClick={history.goBack} />

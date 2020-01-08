@@ -6,7 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const px2rem = require('postcss-px2rem');
 const theme = require('./package.json').theme;
 
-console.log('theme--->', theme);
+console.log('__dirname--->', __dirname);
 
 module.exports = {
   // 入口文件
@@ -24,7 +24,7 @@ module.exports = {
     host: 'localhost',
     port: 3000, // 端口号
     progress: true, // 开启加载
-    open: true, // 自动打开浏览器
+    open: false, // 自动打开浏览器
     compress: true, // 启动压缩
     contentBase: path.resolve(__dirname, 'dist'),
     hot: true, // 开启热更新
@@ -44,7 +44,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.js$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -158,7 +158,7 @@ module.exports = {
       '@ACTION': path.join(__dirname, 'src/redux/actions')
     },
     // 省略后缀
-    extensions: ['.js', '.jsx', '.json', '.less']
+    extensions: ['.ts', '.js', '.jsx', '.json', '.less']
   },
   mode: 'development' // 模式配置
 }

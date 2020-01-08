@@ -9,6 +9,9 @@ import Loading from '@COMPONENT/loading';
 
 const Index = lazy(() => import('@PAGE/index'));
 const Sheetlist = lazy(() => import('@PAGE/sheetlist'));
+const Rank = lazy(() => import('@PAGE/rank'));
+// const Playlist = lazy(() => import('@PAGE/playlist'));
+import Playlist from '@PAGE/playlist';
 
 import './index.less';
 
@@ -26,6 +29,8 @@ class GetRouter extends Component {
                 <Switch>
                   <Route path="/" exact component={Index} />
                   <Route path='/sheetlist' exact component={Sheetlist} />
+                  <Route path='/rank' exact component={Rank} />
+                  <Route path='/playlist/:id' exact component={Playlist} />
                   <Redirect to="/" />
                 </Switch>
               </Suspense>

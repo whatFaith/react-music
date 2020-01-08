@@ -1,10 +1,10 @@
-import { PLAYLIST_CONFIG_SUCCESS } from '../actions';
+import { PLAYLIST_CONFIG_SUCCESS } from '@ACTION';
 
 const initState = {
   data: []
 };
 
-export default function playlist(state = initState, action) {
+export function playlist(state = initState, action) {
   const {
     type,
     data

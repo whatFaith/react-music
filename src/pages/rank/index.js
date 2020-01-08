@@ -1,47 +1,57 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { PullToRefresh } from 'antd-mobile';
+import { Link } from 'react-router-dom';
 
-import { playlist } from '@ACTION';
+import { topDetail } from '@ACTION';
 
 import { translateNum } from '@ASSETS/js/util';
-
-import Loading from '@COMPONENT/loading';
 
 import './index.less';
 
 class Rank extends PureComponent {
   constructor(props) {
     super(props);
-
-    this.state = {
-      refreshing: true,
-      height: document.querySelector('.p-all--scroll') ? document.querySelector('.p-all--scroll').offsetHeight : document.documentElement.clientHeight,
-    }
   }
 
   componentDidMount() {
-    this.fetchPlaylist();
+    this.fetchDetail();
   }
 
-  fetchPlaylist = () => {
-    this.setState({ refreshing: true, isLoading: true });
-    const { fetchPlaylist, playlist } = this.props;
+  fetchDetail = () => {
+    console.log('this.props-->', this.props);
+    const { fetchDetail } = this.props;
 
-    return fetchPlaylist && fetchPlaylist(playlist.data.length).then(() => {
-      this.setState({
-        refreshing: false,
-        isLoading: false
-      });
-    });
+    fetchDetail && fetchDetail();
   }
 
   render() {
-    const { playlist } = this.props;
+    const { artistToplist, list, rewardToplist } = this.props;
 
     return (
       <div className="p-rank">
-        
+        <div className="rank-title">官方榜单</div>
+        {
+          list.length > 0 && list.map((data) => {
+            return (
+              <Link to={`/playlist/${data.id}`} key={data.id}>
+                <div className="row-item">
+                  <div className="item-img">
+                    <img src={data.coverImgUrl} alt={data.name} />
+                  </div>
+                  <div className="item-list">
+                    {
+                      Array.isArray(data.tracks) && data.tracks.map((track, index) => {
+                        return (
+                          <p key={`tracks-${index}`}>{track.first}-{track.second}</p>
+                        )
+                      })
+                    }
+                  </div>
+                </div>
+              </Link>
+            )
+          })
+        }
       </div>
     );
   }
@@ -50,18 +60,25 @@ class Rank extends PureComponent {
 export default connect(
   state => {
     const {
-      playlist
+      topDetail = {}
     } = state;
+    const {
+      artistToplist = {},
+      list = [],
+      rewardToplist = {}
+    } = topDetail;
 
     return {
-      playlist
+      artistToplist,
+      list,
+      rewardToplist
     }
   },
   (dispatch) => {
     return {
-      fetchPlaylist: (offset) => {
-        return dispatch(playlist(offset));
+      fetchDetail: () => {
+        return dispatch(topDetail());
       }
     }
   }
-)(Sheetlist);
+)(Rank);

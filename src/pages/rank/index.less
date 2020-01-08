@@ -1,0 +1,44 @@
+.p-rank {
+  width: 100%;
+
+  .rank-title {
+    height: 50px;
+    line-height: 50px;
+    font-size: 18px;
+    padding-left: 10px;
+  }
+  .row-item {
+    margin-bottom: 5px;
+    display: flex;
+    height: 124px;
+    padding: 0 10px;
+
+    .item-img {
+      width: 124px;
+      height: 124px;
+      position: relative;
+
+      img {
+        width: 124px;
+      }
+    }
+
+    .item-list {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      padding-left: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, .1);
+      width: 231px;
+
+      p {
+        color: #666666;
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
